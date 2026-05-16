@@ -719,6 +719,7 @@ if(UNIX OR MSVC)
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/tools)
     add_executable(z_keyexpr_canonizer ${PROJECT_SOURCE_DIR}/tools/z_keyexpr_canonizer.c)
     target_link_libraries(z_keyexpr_canonizer zenohpico::lib)
+    install(TARGETS z_keyexpr_canonizer RUNTIME DESTINATION bin/tool COMPONENT Tools)
   endif()
 
   if(BUILD_TESTING AND CMAKE_C_STANDARD MATCHES "11")
@@ -807,6 +808,19 @@ if(UNIX OR MSVC)
     target_link_libraries(z_pqueue_test zenohpico::lib)
     target_link_libraries(z_test_fragment_decode_error_transport_zbuf zenohpico::lib)
     target_compile_definitions(z_test_fragment_decode_error_transport_zbuf PRIVATE Z_TEST_HOOKS=1)
+
+    set(ZP_UNIT_TESTS
+      z_data_struct_test z_channels_test z_collections_test z_endpoint_test
+      z_iobuf_test z_msgcodec_test z_keyexpr_test z_api_null_drop_test
+      z_api_double_drop_test z_api_timestamp_test z_test_fragment_tx
+      z_test_fragment_rx z_perf_tx z_perf_rx z_bytes_test z_api_bytes_test
+      z_api_encoding_test z_refcount_test z_lru_cache_test z_test_peer_unicast
+      z_test_peer_multicast z_utils_test z_tls_test z_tls_config_test
+      z_condvar_wait_until_test z_sync_group_test z_cancellation_token_test
+      z_local_loopback_test z_open_test z_json_encoder_test z_executor_test
+      z_background_executor_test z_hashmap_test z_pqueue_test
+      z_test_fragment_decode_error_transport_zbuf)
+    install(TARGETS ${ZP_UNIT_TESTS} RUNTIME DESTINATION bin/test_unit COMPONENT Tests)
 
     configure_file(${PROJECT_SOURCE_DIR}/tests/modularity.py ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/modularity.py COPYONLY)
     configure_file(${PROJECT_SOURCE_DIR}/tests/raweth.py ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/raweth.py COPYONLY)
@@ -908,6 +922,16 @@ endif()
       target_link_libraries(z_multi_queryable_test zenohpico::lib)
       target_link_libraries(z_api_callback_drop_on_undeclare_test zenohpico::lib)
       target_link_libraries(z_api_batching_test zenohpico::lib)
+
+      set(ZP_INTEGRATION_TESTS
+        z_client_test z_api_alignment_test z_wildcard_subscription_test
+        z_api_liveliness_test z_api_matching_test z_api_source_info_test
+        z_api_connectivity_test z_api_queryable_test z_api_cancellation_test
+        z_api_local_queryable_test z_api_local_subscriber_test
+        z_api_admin_space_test z_multi_pubsub_test z_multi_queryable_test
+        z_api_batching_test z_api_advanced_pubsub_test
+        z_api_callback_drop_on_undeclare_test)
+      install(TARGETS ${ZP_INTEGRATION_TESTS} RUNTIME DESTINATION bin/test_integration COMPONENT Tests)
 
       configure_file(${PROJECT_SOURCE_DIR}/tests/routed.sh ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/routed.sh COPYONLY)
       configure_file(${PROJECT_SOURCE_DIR}/tests/tls_verify.sh ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/tls_verify.sh COPYONLY)
