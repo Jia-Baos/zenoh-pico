@@ -68,3 +68,5 @@ Module.symvers
 Mkfile.old
 dkms.conf
 .cache
+
+install-prefix

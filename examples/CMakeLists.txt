@@ -55,6 +55,11 @@ if(UNIX)
         add_example(z_scout unix/c99/z_scout.c)
         add_example(z_ping unix/c99/z_ping.c)
         add_example(z_pong unix/c99/z_pong.c)
+
+        set(ZP_EXAMPLES
+          z_put z_pub z_pub_st z_sub z_sub_st z_pull z_get z_queryable
+          z_info z_scout z_ping z_pong)
+        install(TARGETS ${ZP_EXAMPLES} RUNTIME DESTINATION bin/example COMPONENT Examples)
     else()
         add_example(z_put unix/c11/z_put.c)
         add_example(z_pub unix/c11/z_pub.c)
@@ -88,6 +93,15 @@ if(UNIX)
         add_example(z_liveliness unix/c11/z_liveliness.c)
         add_example(z_get_lat unix/c11/z_get_lat.c)
         add_example(z_queryable_lat unix/c11/z_queryable_lat.c THREADS)
+
+        set(ZP_EXAMPLES
+          z_put z_pub z_pub_st z_pub_attachment z_pub_tls z_advanced_pub
+          z_sub z_sub_channel z_sub_st z_sub_attachment z_sub_liveliness
+          z_sub_tls z_advanced_sub z_pull z_get z_get_channel z_get_attachment
+          z_get_liveliness z_querier z_queryable z_queryable_channel
+          z_queryable_attachment z_info z_scout z_ping z_pong z_pub_thr
+          z_sub_thr z_bytes z_liveliness z_get_lat z_queryable_lat)
+        install(TARGETS ${ZP_EXAMPLES} RUNTIME DESTINATION bin/example COMPONENT Examples)
     endif()
 elseif(MSVC)
     add_example(z_put windows/z_put.c)
@@ -102,4 +116,9 @@ elseif(MSVC)
     add_example(z_scout windows/z_scout.c)
     add_example(z_ping windows/z_ping.c)
     add_example(z_pong windows/z_pong.c)
+
+    set(ZP_EXAMPLES
+      z_put z_pub z_pub_st z_sub z_sub_st z_pull z_get z_queryable
+      z_info z_scout z_ping z_pong)
+    install(TARGETS ${ZP_EXAMPLES} RUNTIME DESTINATION bin/example COMPONENT Examples)
 endif()
